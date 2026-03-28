@@ -838,10 +838,15 @@ a:hover {
     margin-top: 1.75rem;
 }
 
-/* Rent vs EMI */
-.rent-emi-section {
-    padding: 4rem 0;
-    background: linear-gradient(180deg, #fff 0%, var(--color-bg-soft) 100%);
+/* Rent vs EMI (inside merged pricing section) */
+.pricing-rent-emi-block {
+    margin-bottom: 2.75rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(26, 21, 18, 0.08);
+}
+
+.pricing-price-block .section-header {
+    margin-bottom: 1.25rem;
 }
 
 .rent-emi-grid {
@@ -910,12 +915,18 @@ a:hover {
     color: #047857;
 }
 
-.rent-emi-punch {
+.rent-emi-followup {
+    max-width: 38rem;
+    margin: 2rem auto 0;
+}
+
+.rent-emi-followup .about-specs-details {
+    margin-top: 0;
+}
+
+.rent-emi-eligibility-cta {
+    margin-top: 1.1rem;
     text-align: center;
-    margin: 2rem 0 0;
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--color-navy);
 }
 
 /* Loan strip */
