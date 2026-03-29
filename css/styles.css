@@ -522,7 +522,7 @@ a:hover {
 
 @media (min-width: 768px) {
     .about-content {
-        /* Slightly wider image column, readable text column */
+        /* Slightly wider image column; row height follows text column */
         grid-template-columns: minmax(0, 1fr) minmax(300px, 1.22fr);
         gap: 2.25rem;
         align-items: stretch;
@@ -566,43 +566,6 @@ a:hover {
 .project-highlights--compact li {
     margin-bottom: 0.5rem;
     font-size: 0.95rem;
-}
-
-.about-specs-details {
-    margin-top: 1.25rem;
-    padding: 0.85rem 1rem;
-    background: var(--color-bg-soft);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius);
-    font-size: 0.9rem;
-}
-
-.about-specs-details summary {
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--color-navy);
-    list-style: none;
-}
-
-.about-specs-details summary::-webkit-details-marker {
-    display: none;
-}
-
-.about-specs-details summary::after {
-    content: " \002B";
-    color: var(--color-gold);
-    font-weight: 700;
-}
-
-.about-specs-details[open] summary::after {
-    content: " \2212";
-}
-
-.about-specs-details ul {
-    margin: 0.85rem 0 0;
-    padding-left: 1.2rem;
-    color: var(--color-text);
-    line-height: 1.65;
 }
 
 .about-brochure-hint {
@@ -699,20 +662,6 @@ a:hover {
     border-radius: 2px;
     box-shadow: none;
     background: var(--price-overview-cream-cell);
-}
-
-.price-overview-banner {
-    margin: 0;
-    padding: 0.9rem 1rem;
-    text-align: center;
-    font-family: var(--font);
-    font-size: clamp(1.05rem, 2.4vw, 1.3rem);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #1a1512;
-    background: var(--price-overview-cream);
-    border-bottom: 2px solid var(--price-overview-border);
 }
 
 .price-table {
@@ -852,14 +801,35 @@ a:hover {
 .rent-emi-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.25rem;
-    max-width: 640px;
+    gap: 1rem;
+    max-width: 680px;
     margin: 0 auto;
+}
+
+.rent-emi-vs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+    color: var(--color-navy);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    padding: 0.35rem 0;
+    user-select: none;
 }
 
 @media (min-width: 560px) {
     .rent-emi-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: stretch;
+        gap: 0.85rem 1rem;
+    }
+
+    .rent-emi-vs {
+        align-self: center;
+        padding: 0 0.35rem;
     }
 }
 
@@ -918,15 +888,62 @@ a:hover {
 .rent-emi-followup {
     max-width: 38rem;
     margin: 2rem auto 0;
-}
-
-.rent-emi-followup .about-specs-details {
-    margin-top: 0;
+    text-align: center;
 }
 
 .rent-emi-eligibility-cta {
     margin-top: 1.1rem;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Pricing CTAs: phones — flex + explicit button width (avoids full-bleed / off-center) */
+@media (max-width: 767px) {
+    .pricing-section .rent-emi-followup {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 100%;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-inline: 0;
+    }
+
+    .pricing-section .rent-emi-followup .about-brochure-hint {
+        text-align: center;
+        width: 100%;
+        max-width: 26rem;
+    }
+
+    .pricing-section .rent-emi-eligibility-cta {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .pricing-section .rent-emi-eligibility-cta .btn-primary {
+        width: auto;
+        max-width: min(100%, 22rem);
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .pricing-section .pricing-cta-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .pricing-section .pricing-cta-wrap .btn-primary {
+        width: auto;
+        max-width: min(100%, 22rem);
+    }
 }
 
 /* Loan strip */
@@ -983,6 +1000,20 @@ a:hover {
     color: var(--color-gold);
 }
 
+.loan-cta-wrap {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 767px) {
+    .loan-section .loan-cta-wrap .btn-primary {
+        width: auto;
+        max-width: min(100%, 22rem);
+    }
+}
+
 /* Location — softer band vs adjacent white sections; tighter vertical rhythm */
 .location-section {
     padding: 2.25rem 0 2.75rem;
@@ -1032,16 +1063,15 @@ a:hover {
     margin: 0;
 }
 
-/* Image column: large, cover-crop — fills grid row so nothing sits empty below */
+/* Image column: desktop — height matches highlights/text column (grid stretch + absolute fill) */
 .about-image {
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    position: relative;
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
     background: var(--color-navy);
-    min-height: clamp(18rem, 48vh, 34rem);
+    min-height: clamp(14rem, 42vw, 22rem);
 }
 
 .about-image img {
@@ -1055,13 +1085,15 @@ a:hover {
 @media (min-width: 768px) {
     .about-image {
         align-self: stretch;
-        min-height: clamp(22rem, 50vh, 40rem);
-        height: 100%;
+        min-height: 0;
+        height: auto;
     }
 
     .about-image img {
-        flex: 1 1 auto;
-        min-height: 0;
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
     }
 }
 
@@ -1070,6 +1102,14 @@ a:hover {
         order: -1;
         min-height: clamp(15rem, 40vw, 20rem);
         max-height: 48vh;
+    }
+
+    .about-image img {
+        position: static;
+        width: 100%;
+        height: auto;
+        max-height: 48vh;
+        object-fit: cover;
     }
 }
 
@@ -1147,21 +1187,27 @@ a:hover {
     margin-bottom: 1.5rem;
 }
 
+/* 6 images: 2×3 on phones, 3×2 from tablet up — centered, no orphan row */
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
+    max-width: 56rem;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 640px) {
     .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.2rem;
     }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1100px) {
     .gallery-grid {
-        grid-template-columns: repeat(4, 1fr);
+        max-width: 62rem;
+        gap: 1.35rem;
     }
 }
 
@@ -1174,6 +1220,7 @@ a:hover {
     overflow: hidden;
     text-align: left;
     transition: transform var(--transition), box-shadow var(--transition);
+    -webkit-tap-highlight-color: rgba(184, 151, 108, 0.35);
 }
 
 .gallery-item:hover {
@@ -1187,17 +1234,19 @@ a:hover {
 }
 
 .gallery-thumb {
-    min-height: 160px;
     width: 100%;
     padding: 0;
     overflow: hidden;
+    aspect-ratio: 4 / 3;
+    position: relative;
 }
 
 .gallery-thumb img,
 .gallery-thumb-img {
     width: 100%;
-    height: 180px;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
 }
 
@@ -1382,77 +1431,44 @@ a:hover {
     background: var(--color-white);
 }
 
-.floor-plans-grid {
-    display: grid;
-    gap: 1.5rem;
+/* Single floor plan — large readable image + tap for lightbox */
+.floor-plans-single {
+    max-width: min(100%, 68rem);
+    margin: 0 auto;
 }
 
-@media (min-width: 768px) {
-    .floor-plans-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.plan-card {
-    background: var(--color-bg-soft);
+.floor-plan-zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border: none;
+    cursor: zoom-in;
     border-radius: var(--radius);
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform var(--transition);
+    background: var(--color-bg-soft);
+    line-height: 0;
+    text-align: left;
+    -webkit-tap-highlight-color: rgba(184, 151, 108, 0.35);
+    transition: transform var(--transition), box-shadow var(--transition);
 }
 
-.plan-card:hover {
-    transform: translateY(-2px);
+.floor-plan-zoom:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(42, 38, 36, 0.14);
 }
 
-.plan-image .placeholder-image {
-    min-height: 180px;
-    border-radius: 0;
+.floor-plan-zoom:focus-visible {
+    outline: 3px solid var(--color-gold);
+    outline-offset: 4px;
 }
 
-.plan-image img {
+.floor-plan-zoom img {
     width: 100%;
-    height: 220px;
-    object-fit: cover;
-    object-position: top center;
+    height: auto;
     display: block;
-    border-radius: 0;
-}
-
-.plan-image {
-    overflow: hidden;
-}
-
-.plan-details {
-    padding: 1.25rem 1.5rem 1.5rem;
-}
-
-.plan-details h3 {
-    margin: 0 0 1rem;
-    color: var(--color-navy);
-}
-
-.plan-specs {
-    margin-bottom: 1.25rem;
-}
-
-.spec-item {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.35rem 0;
-    font-size: 0.9rem;
-    border-bottom: 1px solid var(--color-border);
-}
-
-.spec-label {
-    color: var(--color-text-muted);
-}
-
-.spec-value {
-    font-weight: 600;
-    color: var(--color-navy);
-    text-align: right;
+    vertical-align: middle;
 }
 
 /* Contact */
@@ -1559,6 +1575,25 @@ a:hover {
 
 .info-card a:hover {
     color: var(--color-gold);
+}
+
+.visit-map-link {
+    margin-top: 1rem;
+    margin-bottom: 0 !important;
+}
+
+.visit-map-link a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+    padding-bottom: 0.1rem;
+}
+
+.visit-map-link a:hover {
+    border-bottom-color: var(--color-gold);
 }
 
 .contact-form .form-group {
@@ -1737,49 +1772,35 @@ a:hover {
     background: var(--color-white);
 }
 
-/* Footer */
+/* Footer — one centered column, left-aligned type (matches About + disclaimer + copyright) */
 .footer {
     background: #0a121f;
     color: rgba(255, 255, 255, 0.85);
     padding: 3rem 0 1.5rem;
+    text-align: left;
 }
 
-.footer-brand {
+.footer-about-nlsd {
     margin-bottom: 2rem;
     padding-bottom: 2rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-brand-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 1.1rem 1.35rem;
-    text-align: left;
-}
-
-.footer-logos {
+.footer-about-header {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.85rem;
-    flex-shrink: 0;
-    margin: 0;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.footer-logo-project {
-    width: auto;
-    max-width: min(240px, 55vw);
-    max-height: 56px;
-    object-fit: contain;
-    object-position: left center;
-    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.45));
-}
-
-.footer-brand-text {
-    flex: 1 1 14rem;
-    min-width: 0;
+@media (min-width: 600px) {
+    .footer-about-header {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 1.25rem 1.5rem;
+    }
 }
 
 .footer-logo-developer {
@@ -1787,40 +1808,53 @@ a:hover {
     max-height: 48px;
     object-fit: contain;
     background: var(--color-white);
-    padding: 0.4rem 0.65rem;
+    padding: 0.35rem 0.6rem;
     border-radius: var(--radius);
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+    flex-shrink: 0;
+    display: block;
 }
 
-.footer-title {
-    margin: 0 0 0.35rem;
+.footer-about-title {
+    margin: 0;
+    padding: 0;
     color: var(--color-gold-bright);
-    font-size: clamp(1.15rem, 3vw, 1.35rem);
+    font-size: clamp(1.2rem, 3.2vw, 1.45rem);
     font-family: var(--font-heading);
     font-weight: 700;
     line-height: 1.25;
+    flex: 1 1 12rem;
+    min-width: 0;
 }
 
-.footer-brand-text p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.65);
-    line-height: 1.5;
+.footer-about-body {
+    width: 100%;
+}
+
+.footer-about-body p {
+    margin: 0 0 1rem;
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.78);
+    line-height: 1.65;
+}
+
+.footer-about-body p:last-of-type {
+    margin-bottom: 0;
 }
 
 .footer-credits {
-    margin: 0.75rem 0 0 !important;
+    margin: 1.25rem 0 0 !important;
     font-size: 0.8rem !important;
     color: rgba(255, 255, 255, 0.5) !important;
-    line-height: 1.5;
+    line-height: 1.55;
 }
 
 .footer-disclaimer {
     font-size: 0.75rem;
     line-height: 1.65;
     color: rgba(255, 255, 255, 0.55);
-    max-width: 900px;
-    margin: 0 auto 1.5rem;
+    margin: 0 0 1.5rem;
+    text-align: left;
 }
 
 .footer-disclaimer p {
@@ -1840,7 +1874,7 @@ a:hover {
 }
 
 .footer-bottom {
-    text-align: center;
+    text-align: left;
     padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     font-size: 0.8rem;

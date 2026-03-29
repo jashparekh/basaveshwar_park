@@ -387,6 +387,19 @@
         });
     });
 
+    var floorPlanZoom = document.querySelector(".floor-plan-zoom");
+    if (floorPlanZoom) {
+        floorPlanZoom.addEventListener("click", function () {
+            var full = floorPlanZoom.getAttribute("data-full") || "";
+            var caption = floorPlanZoom.getAttribute("data-caption") || "";
+            var planImg = floorPlanZoom.querySelector("img");
+            if (!full && planImg && planImg.getAttribute("src")) {
+                full = planImg.getAttribute("src");
+            }
+            openLightbox(full, caption);
+        });
+    }
+
     if (lightboxClose) {
         lightboxClose.addEventListener("click", closeLightbox);
     }
