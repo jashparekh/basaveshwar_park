@@ -26,6 +26,7 @@
     var eligibilityModalTitleEl = document.getElementById("eligibilityModalTitle");
     var eligibilityModalIntroEl = document.getElementById("eligibilityModalIntro");
     var eligibilityFormSubjectInput = document.getElementById("eligibilityFormSubject");
+    var eligibilityFormButtonNameInput = document.getElementById("eligibilityFormButtonName");
 
     var ELIGIBILITY_MODAL_DEFAULTS = {
         title: "Check loan eligibility",
@@ -65,12 +66,11 @@
         return data;
     }
 
-    function submitToInbox(form, options) {
+    function submitToWhatsApp(form, options) {
         options = options || {};
         var errEl = options.errorEl;
         var okEl = options.successEl;
         var submitBtn = form.querySelector('button[type="submit"]');
-        var prevLabel = submitBtn ? submitBtn.textContent : "";
 
         if (errEl) {
             errEl.hidden = true;
@@ -85,79 +85,39 @@
             return;
         }
 
-        if (window.location.protocol === "file:") {
-            if (errEl) {
-                errEl.textContent = NEEDS_LOCAL_SERVER_MSG;
-                errEl.hidden = false;
-            }
-            return;
-        }
-
         var payload = formDataToJson(form);
-        if (submitBtn) {
-            submitBtn.disabled = true;
-            submitBtn.textContent = "Sending…";
+        var buttonClicked = payload["Button Clicked"] || "Lead Form";
+        var name = payload.name || "N/A";
+        var phone = payload.phone || "N/A";
+        var email = payload.email || "N/A";
+        var interest = payload.interest || "N/A";
+        var message = payload.message || "N/A";
+
+        var waNumber = "918976584888";
+        var text =
+            "*New Lead — Shri Basaveshwar Park*\n" +
+            "---------------------------------\n" +
+            "*Source:* " + buttonClicked + "\n" +
+            "*Name:* " + name + "\n" +
+            "*Phone:* " + phone + "\n" +
+            "*Email:* " + email + "\n" +
+            "*Interest:* " + (interest === "1bhk" ? "1 BHK" : interest === "2bhk" ? "2 BHK" : "General") + "\n" +
+            "*Message:* " + message + "\n";
+
+        var waUrl = "https://wa.me/" + waNumber + "?text=" + encodeURIComponent(text);
+
+        if (okEl) {
+            okEl.hidden = false;
         }
+        form.reset();
 
-        fetch(FORM_ENDPOINT, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-            body: JSON.stringify(payload),
-        })
-            .then(function (res) {
-                return res.json().then(function (data) {
-                    return { ok: res.ok, data: data };
-                });
-            })
-            .then(function (result) {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = prevLabel;
-                }
-                var d = result.data || {};
-                var accepted =
-                    result.ok &&
-                    !d.error &&
-                    d.success !== false &&
-                    d.success !== "false";
+        setTimeout(function () {
+            window.open(waUrl, "_blank");
+        }, 800);
 
-                if (accepted) {
-                    if (okEl) {
-                        okEl.hidden = false;
-                    }
-                    form.reset();
-                    if (typeof options.onSuccess === "function") {
-                        options.onSuccess();
-                    }
-                } else {
-                    var raw =
-                        d.message ||
-                        d.error ||
-                        "Could not send. Please try WhatsApp or call us.";
-                    var msg =
-                        typeof raw === "string"
-                            ? humanizeFormSubmitError(raw)
-                            : "Send failed. Please try again.";
-                    if (errEl) {
-                        errEl.textContent = msg;
-                        errEl.hidden = false;
-                    }
-                }
-            })
-            .catch(function () {
-                if (submitBtn) {
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = prevLabel;
-                }
-                if (errEl) {
-                    errEl.textContent =
-                        "Network error. Please check your connection and try again.";
-                    errEl.hidden = false;
-                }
-            });
+        if (typeof options.onSuccess === "function") {
+            options.onSuccess();
+        }
     }
 
     function applyEligibilityModalCopy(trigger) {
@@ -173,6 +133,9 @@
         }
         if (eligibilityFormSubjectInput) {
             eligibilityFormSubjectInput.value = subject;
+        }
+        if (eligibilityFormButtonNameInput) {
+            eligibilityFormButtonNameInput.value = trigger ? trigger.textContent.trim() : "Eligibility Form";
         }
     }
 
@@ -416,7 +379,7 @@
     if (enquiryForm) {
         enquiryForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            submitToInbox(enquiryForm, {
+            submitToWhatsApp(enquiryForm, {
                 successEl: formSuccess,
                 errorEl: formError,
                 onSuccess: function () {
@@ -446,7 +409,7 @@
     if (eligibilityForm) {
         eligibilityForm.addEventListener("submit", function (e) {
             e.preventDefault();
-            submitToInbox(eligibilityForm, {
+            submitToWhatsApp(eligibilityForm, {
                 successEl: eligibilityFormSuccess,
                 errorEl: eligibilityFormError,
                 onSuccess: function () {
