@@ -26,6 +26,7 @@
     var eligibilityModalTitleEl = document.getElementById("eligibilityModalTitle");
     var eligibilityModalIntroEl = document.getElementById("eligibilityModalIntro");
     var eligibilityFormSubjectInput = document.getElementById("eligibilityFormSubject");
+    var eligibilityFormButtonNameInput = document.getElementById("eligibilityFormButtonName");
 
     var ELIGIBILITY_MODAL_DEFAULTS = {
         title: "Check loan eligibility",
@@ -173,6 +174,9 @@
         }
         if (eligibilityFormSubjectInput) {
             eligibilityFormSubjectInput.value = subject;
+        }
+        if (eligibilityFormButtonNameInput) {
+            eligibilityFormButtonNameInput.value = trigger ? trigger.textContent.trim() : "Eligibility Form";
         }
     }
 
