@@ -1885,6 +1885,128 @@ a:hover {
     margin: 0;
 }
 
+.footer-legal {
+    margin-bottom: 0.5rem !important;
+}
+
+.footer-legal a {
+    color: var(--color-gold);
+    text-decoration: none;
+}
+
+.footer-legal a:hover {
+    color: var(--color-gold-bright);
+    text-decoration: underline;
+}
+
+/* Legal pages (privacy policy, etc.) */
+.legal-page-body {
+    background: var(--color-white);
+    color: var(--color-text);
+}
+
+.legal-page-header {
+    padding: 1.25rem 0;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.legal-page-logo {
+    display: inline-block;
+}
+
+.legal-page-logo img {
+    max-width: min(220px, 60vw);
+    height: auto;
+    display: block;
+}
+
+.legal-page {
+    padding: 3rem 0 4rem;
+}
+
+.legal-page h1 {
+    font-family: var(--font-heading);
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--color-navy);
+    margin: 0 0 1rem;
+}
+
+.legal-page-effective {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    margin: 0 0 1.5rem;
+}
+
+.legal-page-intro {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin: 0 0 2.5rem;
+    max-width: 48rem;
+}
+
+.legal-section {
+    margin-bottom: 2rem;
+    max-width: 48rem;
+}
+
+.legal-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-navy);
+    margin: 0 0 0.75rem;
+}
+
+.legal-section p {
+    margin: 0 0 0.75rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+.legal-section ul {
+    margin: 0 0 0.75rem;
+    padding-left: 1.35rem;
+    line-height: 1.7;
+}
+
+.legal-section li {
+    margin-bottom: 0.35rem;
+}
+
+.legal-contact {
+    font-style: normal;
+    line-height: 1.7;
+}
+
+.legal-contact a {
+    color: var(--color-navy);
+}
+
+.legal-page-back {
+    margin-top: 2.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.legal-page-back a {
+    color: var(--color-navy);
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.legal-page-back a:hover {
+    text-decoration: underline;
+}
+
+.legal-page-footer {
+    padding: 1.5rem 0;
+}
+
+.legal-page-footer .footer-bottom {
+    border-top: none;
+    padding-top: 0;
+}
+
 /* WhatsApp float */
 .whatsapp-float {
     position: fixed;
